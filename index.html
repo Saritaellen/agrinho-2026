@@ -1,278 +1,299 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoIrriga - Contra o Desperdício de Água</title>
-    <style>
-        :root {
-            --azul-escuro: #0f172a;
-            --azul-agua: #0284c7;
-            --verde-sucesso: #16a34a;
-            --vermelho-alerta: #dc2626;
-            --cinza-fundo: #f8fafc;
-            --branco: #ffffff;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgroClima Inteligente</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
+  <!-- Chart.js (gráficos) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        body {
-            background-color: var(--cinza-fundo);
-            color: #334155;
-            line-height: 1.6;
-        }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f7f5;
+      color: #333;
+    }
 
-        /* Topo */
-        header {
-            background-color: var(--azul-escuro);
-            color: var(--branco);
-            padding: 1.2rem 5%;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-        header span { color: var(--azul-agua); }
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 3rem 1.5rem;
-        }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgroClima Inteligente</title>
 
-        /* Seção do Problema e Solução */
-        .bloco-informativo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
+  <!-- Chart.js (gráficos) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        .card {
-            background: var(--branco);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f7f5;
+      color: #333;
+    }
 
-        .card-problema { border-left: 6px solid var(--vermelho-alerta); }
-        .card-solucao { border-left: 6px solid var(--verde-sucesso); }
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-        h2 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-        .card-problema h2 { color: var(--vermelho-alerta); }
-        .card-solucao h2 { color: var(--verde-sucesso); }
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
 
-        ul {
-            list-style-position: inside;
-            margin-left: 0.5rem;
-        }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
 
-        li { margin-bottom: 0.8rem; }
+    h2 {
+      color: #2e7d32;
+    }
 
-        /* Área do Simulador Prático (Solução em Ação) */
-        .simulador {
-            background: var(--branco);
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
+    .weather {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
 
-        .simulador h2 {
-            color: var(--azul-escuro);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
+    .day {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
 
-        .campos-grupo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
+    .alert {
+      background: #fff3cd;
+      border-left: 6px solid #ff9800;
+      padding: 10px;
+      border-radius: 5px;
+    }
 
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #cbd5e1;
-            border-radius: 6px;
-            background-color: var(--branco);
-            font-size: 1rem;
-            color: #334155;
-            outline: none;
-        }
-
-        select:focus {
-            border-color: var(--azul-agua);
-        }
-
-        .btn-calcular {
-            display: block;
-            width: 100%;
-            background-color: var(--azul-agua);
-            color: var(--branco);
-            border: none;
-            padding: 1rem;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-calcular:hover {
-            background-color: #026ca3;
-        }
-
-        /* Painel de Resultado */
-        .resultado-box {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            display: none; /* Inicia escondido */
-        }
-
-        .status-parar {
-            background-color: #fee2e2;
-            color: var(--vermelho-alerta);
-            border: 2px solid #fca5a5;
-        }
-
-        .status-regar {
-            background-color: #dcfce7;
-            color: var(--verde-sucesso);
-            border: 2px solid #86efac;
-        }
-
-        footer {
-            background: var(--azul-escuro);
-            color: #94a3b8;
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 0.85rem;
-            margin-top: 4rem;
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 1.5rem 1rem; }
-            .simulador { padding: 1.5rem; }
-        }
-    </style>
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #2e7d32;
+      color: white;
+    }
+  </style>
 </head>
+
 <body>
 
-    <header>
-        💧 Eco<span>Irriga</span> — Tecnologia Contra a Irrigação Excessiva
-    </header>
+<header>
+  <h1>🌱 AgroClima Inteligente</h1>
+  <p>Tecnologia ajudando o produtor rural a decidir o melhor momento de plantar e colher</p>
+</header>
 
-    <main class="container">
+<div class="container">
 
-        <!-- Diagnóstico: Problema vs Solução -->
-        <section class="bloco-informativo">
-            <div class="card card-problema">
-                <h2>⚠️ O Problema: Irrigação Excessiva</h2>
-                <ul>
-                    <li><strong>Morte por Sufocamento:</strong> O excesso de água expulsa o oxigênio da terra e apodrece as raízes.</li>
-                    <li><strong>Perda de Nutrientes:</strong> A água em abundância lava o solo (lixiviação) e leva o adubo embora.</li>
-                    <li><strong>Desperdício Caro:</strong> Gasta reservatórios públicos e encarece a conta de energia com bombas ligadas à toa.</li>
-                </ul>
-            </div>
+  <div class="card">
+    <h2>📌 Problema que o site resolve</h2>
+    <p>
+      Muitos produtores de soja e milho perdem dinheiro porque plantam na época errada
+      devido à falta de informações climáticas claras. Este site ajuda a prever o clima
+      e reduzir riscos na lavoura.
+    </p>
+  </div>
 
-            <div class="card card-solucao">
-                <h2>💡 A Solução: Automação Baseada em Dados</h2>
-                <ul>
-                    <li><strong>Monitoramento Constante:</strong> Cruzamento de dados de chuva com as características físicas do terreno.</li>
-                    <li><strong>Decisão Inteligente:</strong> Algoritmos que determinam o momento exato de abrir ou fechar as válvulas.</li>
-                    <li><strong>Economia Real:</strong> Redução de até 40% no consumo de água mantendo a produtividade alta.</li>
-                </ul>
-            </div>
-        </section>
+  <div class="card">
+    <h2>🌦️ Previsão do tempo (simulada)</h2>
+    <div class="weather">
+      <div class="day">Seg<br>☀️ 28°C</div>
+      <div class="day">Ter<br>⛅ 26°C</div>
+      <div class="day">Qua<br>🌧️ 22°C</div>
+      <div class="day">Qui<br>🌧️ 21°C</div>
+      <div class="day">Sex<br>☀️ 30°C</div>
+    </div>
+  </div>
 
-        <!-- Ferramenta Prática: Simulador de Decisão -->
-        <section class="simulador">
-            <h2>📱 Simulador de Campo Inteligente</h2>
-            <p style="text-align: center; margin-bottom: 1.5rem; font-size: 0.95rem;">Mude os parâmetros abaixo para simular o comportamento do nosso sistema automatizado:</p>
-            
-            <div class="campos-grupo">
-                <div>
-                    <label for="clima">Previsão do Tempo (Hoje):</label>
-                    <select id="clima">
-                        <option value="chuva">🌧️ Chovendo ou Previsão de Chuva</option>
-                        <option value="nublado">☁️ Nublado / Baixo Calor</option>
-                        <option value="sol">☀️ Ensolarado / Muito Calor</option>
-                    </select>
-                </div>
+  <div class="card">
+    <h2>⚠️ Alertas para o agricultor</h2>
+    <div class="alert">
+      Chuva forte prevista na quarta e quinta-feira. Evite plantio nesses dias.
+    </div>
+  </div>
 
-                <div>
-                    <label for="solo">Tipo de Solo da Lavoura:</label>
-                    <select id="solo">
-                        <option value="argiloso">🧱 Argiloso (Retém muita água)</option>
-                        <option value="arenoso">⏳ Arenoso (Seca muito rápido)</option>
-                    </select>
-                </div>
-            </div>
+  <div class="card">
+    <h2>📊 Média de chuva na semana</h2>
+    <canvas id="chuvaChart"></canvas>
+  </div>
 
-            <button class="btn-calcular" onclick="analisarIrrigacao()">Analisar Necessidade de Irrigação</button>
+  <div class="card">
+    <h2>💡 Como a tecnologia ajuda</h2>
+    <p>
+      O site usa programação (HTML, CSS e JavaScript) para exibir informações de forma simples.
+      No futuro, pode ser conectado a APIs de clima em tempo real.
+      A matemática ajuda a calcular médias de chuva e estimativas de produção por hectare.
+    </p>
+  </div>
 
-            <!-- Onde o resultado aparece -->
-            <div id="resultado" class="resultado-box"></div>
-        </section>
+</div>
 
-    </main>
+<footer>
+  <p>Projeto educacional - Agricultura + Tecnologia 🌾</p>
+</footer>
 
-    <footer>
-        <p>Projeto Agrinho 2026 — Foco em Soluções Sustentáveis e Eficiência Hídrica.</p>
-    </footer>
+<script>
+  // Gráfico de chuva (dados simulados)
+  const ctx = document.getElementById('chuvaChart');
 
-    <!-- Lógica em JavaScript que faz o site funcionar sozinho -->
-    <script>
-        function analisarIrrigacao() {
-            // Pega as escolhas do usuário
-            const clima = document.getElementById('clima').value;
-            const solo = document.getElementById('solo').value;
-            const painelResultado = document.getElementById('resultado');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+      datasets: [{
+        label: 'Chuva (mm)',
+        data: [2, 5, 20, 25, 3],
+        backgroundColor: '#2e7d32'
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
 
-            // Limpa as classes antigas do painel
-            painelResultado.className = "resultado-box";
-            painelResultado.style.display = "block";
+</body>
+</html>
+    }
 
-            // Lógica de tomada de decisão (Solução do problema)
-            if (clima === "chuva") {
-                painelResultado.innerHTML = "❌ STATUS: SISTEMA DESLIGADO<br><small>Motivo: Choveu ou vai chover. Ligar a irrigação agora causará encharcamento e asfixia das raízes.</small>";
-                painelResultado.classList.add("status-parar");
-            } 
-            else if (clima === "nublado" && solo === "argiloso") {
-                painelResultado.innerHTML = "❌ STATUS: SISTEMA DESLIGADO<br><small>Motivo: O solo argiloso já armazena umidade suficiente para dias nublados e frios.</small>";
-                painelResultado.classList.add("status-parar");
-            } 
-            else if (clima === "nublado" && solo === "arenoso") {
-                painelResultado.innerHTML = "✅ STATUS: IRRIGAR POR 15 MINUTOS<br><small>Motivo: O solo arenoso seca rápido, necessitando de uma rega curta mesmo sem sol forte.</small>";
-                painelResultado.classList.add("status-regar");
-            } 
-            else if (clima === "sol" && solo === "argiloso") {
-                painelResultado.innerHTML = "✅ STATUS: IRRIGAR POR 20 MINUTOS<br><small>Motivo: Sol forte evapora a água superficial, exige rega moderada devido à retenção do solo.</small>";
-                painelResultado.classList.add("status-regar");
-            } 
-            else if (clima === "sol" && solo === "arenoso") {
-                painelResultado.innerHTML = "✅ STATUS: IRRIGAR POR 40 MINUTOS<br><small>Motivo: Alerta crítico de ressecamento. Solo arenoso sob sol forte exige o tempo máximo de rega controlada.</small>";
-                painelResultado.classList.add("status-regar");
-            }
+    h2 {
+      color: #2e7d32;
+    }
+
+    .weather {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .day {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .alert {
+      background: #fff3cd;
+      border-left: 6px solid #ff9800;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #2e7d32;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌱 AgroClima Inteligente</h1>
+  <p>Tecnologia ajudando o produtor rural a decidir o melhor momento de plantar e colher</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>📌 Problema que o site resolve</h2>
+    <p>
+      Muitos produtores de soja e milho perdem dinheiro porque plantam na época errada
+      devido à falta de informações climáticas claras. Este site ajuda a prever o clima
+      e reduzir riscos na lavoura.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🌦️ Previsão do tempo (simulada)</h2>
+    <div class="weather">
+      <div class="day">Seg<br>☀️ 28°C</div>
+      <div class="day">Ter<br>⛅ 26°C</div>
+      <div class="day">Qua<br>🌧️ 22°C</div>
+      <div class="day">Qui<br>🌧️ 21°C</div>
+      <div class="day">Sex<br>☀️ 30°C</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚠️ Alertas para o agricultor</h2>
+    <div class="alert">
+      Chuva forte prevista na quarta e quinta-feira. Evite plantio nesses dias.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📊 Média de chuva na semana</h2>
+    <canvas id="chuvaChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>💡 Como a tecnologia ajuda</h2>
+    <p>
+      O site usa programação (HTML, CSS e JavaScript) para exibir informações de forma simples.
+      No futuro, pode ser conectado a APIs de clima em tempo real.
+      A matemática ajuda a calcular médias de chuva e estimativas de produção por hectare.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  <p>Projeto educacional - Agricultura + Tecnologia 🌾</p>
+</footer>
+
+<script>
+  // Gráfico de chuva (dados simulados)
+  const ctx = document.getElementById('chuvaChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+      datasets: [{
+        label: 'Chuva (mm)',
+        data: [2, 5, 20, 25, 3],
+        backgroundColor: '#2e7d32'
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
+
+</body>
+</html>
