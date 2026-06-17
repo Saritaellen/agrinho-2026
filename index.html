@@ -1,174 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AgroClima Inteligente</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroClima Inteligente</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: Arial;
+    background: #eaf5ea;
+  }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #eef5ee;
-      color: #2b2b2b;
-    }
+  header {
+    background: #1b5e20;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
 
-    header {
-      background: #1b5e20;
-      color: white;
-      text-align: center;
-      padding: 25px 15px;
-    }
+  .container {
+    max-width: 900px;
+    margin: auto;
+    padding: 15px;
+  }
 
-    header h1 {
-      margin: 0;
-      font-size: 26px;
-    }
+  .card {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
 
-    header p {
-      margin-top: 8px;
-      font-size: 14px;
-    }
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 15px;
-    }
+  select, input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
 
-    .card {
-      background: white;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+  button {
+    background: #1b5e20;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-    h2 {
-      color: #1b5e20;
-      font-size: 18px;
-    }
+  button:hover {
+    background: #145016;
+  }
 
-    .weather-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
-    }
+  .resultado {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
 
-    .day {
-      background: #e8f5e9;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-      font-size: 14px;
-    }
+  .baixo { background: #d4edda; color: #155724; }
+  .medio { background: #fff3cd; color: #856404; }
+  .alto { background: #f8d7da; color: #721c24; }
 
-    .alert {
-      background: #fff3cd;
-      border-left: 6px solid #ff9800;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    footer {
-      text-align: center;
-      background: #1b5e20;
-      color: white;
-      padding: 12px;
-      font-size: 13px;
-    }
-
-    canvas {
-      max-width: 100%;
-    }
-  </style>
+  footer {
+    text-align: center;
+    padding: 10px;
+    background: #1b5e20;
+    color: white;
+    font-size: 13px;
+  }
+</style>
 </head>
 
 <body>
 
 <header>
   <h1>🌱 AgroClima Inteligente</h1>
-  <p>Uso da tecnologia para ajudar produtores de soja e milho a decidir o melhor momento de plantar e colher</p>
+  <p>Decisão inteligente para plantio de soja e milho</p>
 </header>
 
 <div class="container">
 
   <div class="card">
-    <h2>📌 Problema do projeto</h2>
+    <h2>📌 Simulador de Plantio</h2>
+
+    <label>Cultura</label>
+    <select id="cultura">
+      <option value="soja">Soja</option>
+      <option value="milho">Milho</option>
+    </select>
+
+    <label>Data de plantio</label>
+    <input type="date" id="data">
+
+    <button onclick="analisar()">Analisar clima</button>
+
+    <div id="resultado" class="resultado"></div>
+  </div>
+
+  <div class="card">
+    <h2>📊 Histórico de chuva (simulado)</h2>
+    <canvas id="grafico"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>💡 Como funciona</h2>
     <p>
-      Muitos agricultores perdem parte da produção por causa de mudanças inesperadas no clima.
-      O objetivo deste site é ajudar o produtor rural a ter informações mais claras sobre o tempo,
-      reduzindo prejuízos no plantio de soja e milho.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>🌦️ Previsão do tempo (exemplo)</h2>
-    <div class="weather-grid">
-      <div class="day">Seg<br>☀️ 28°C</div>
-      <div class="day">Ter<br>⛅ 27°C</div>
-      <div class="day">Qua<br>🌧️ 22°C</div>
-      <div class="day">Qui<br>🌧️ 21°C</div>
-      <div class="day">Sex<br>☀️ 30°C</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>⚠️ Alerta agrícola</h2>
-    <div class="alert">
-      Alta probabilidade de chuva entre quarta e quinta-feira.
-      Evite o plantio nesse período para não prejudicar a lavoura.
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>📊 Média de chuva na semana</h2>
-    <canvas id="graficoChuva"></canvas>
-  </div>
-
-  <div class="card">
-    <h2>💡 Tecnologia aplicada</h2>
-    <p>
-      O site usa <strong>HTML</strong>, <strong>CSS</strong> e <strong>JavaScript</strong> para funcionar.
-      No futuro, pode ser conectado a APIs de clima para trazer dados em tempo real.
-      A matemática ajuda a calcular médias de chuva e estimativas de produção por hectare,
-      facilitando a tomada de decisão do agricultor.
+      O sistema usa lógica de programação para simular risco climático.
+      A matemática calcula o risco com base na época do ano escolhida,
+      ajudando o produtor a evitar perdas na lavoura.
     </p>
   </div>
 
 </div>
 
 <footer>
-  Projeto escolar - Tecnologia no campo 🌾
+  Projeto educacional - Agricultura + Tecnologia 🌾
 </footer>
 
 <script>
-  const ctx = document.getElementById('graficoChuva');
+  function analisar() {
+    const cultura = document.getElementById("cultura").value;
+    const data = new Date(document.getElementById("data").value);
 
-  new Chart(ctx, {
-    type: 'bar',
+    const mes = data.getMonth() + 1;
+
+    let risco = 0;
+
+    // Simulação matemática de risco climático
+    if (mes >= 10 || mes <= 2) {
+      risco = 80; // período mais instável
+    } else if (mes >= 3 && mes <= 6) {
+      risco = 40;
+    } else {
+      risco = 20;
+    }
+
+    // Ajuste por cultura
+    if (cultura === "milho") {
+      risco += 10;
+    }
+
+    const resultado = document.getElementById("resultado");
+
+    if (risco <= 30) {
+      resultado.className = "resultado baixo";
+      resultado.innerHTML = "✔ Baixo risco climático. Boa época para plantio.";
+    } else if (risco <= 60) {
+      resultado.className = "resultado medio";
+      resultado.innerHTML = "⚠ Risco médio. Avalie antes de plantar.";
+    } else {
+      resultado.className = "resultado alto";
+      resultado.innerHTML = "❌ Alto risco climático. Evite plantar agora.";
+    }
+  }
+
+  // gráfico simples
+  new Chart(document.getElementById("grafico"), {
+    type: "line",
     data: {
-      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+      labels: ["Jan","Fev","Mar","Abr","Mai","Jun"],
       datasets: [{
-        label: 'Chuva (mm)',
-        data: [3, 8, 25, 22, 4],
-        backgroundColor: '#1b5e20'
+        label: "Chuva (mm)",
+        data: [180, 160, 120, 90, 60, 40],
+        borderColor: "#1b5e20",
+        fill: true
       }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: true
-        }
-      }
     }
   });
 </script>
