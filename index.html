@@ -5,81 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AgroClima Inteligente</title>
 
-  <!-- Chart.js (gráficos) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background: #f4f7f5;
-      color: #333;
+      font-family: Arial, sans-serif;
+      background: #eef5ee;
+      color: #2b2b2b;
     }
 
     header {
-      background: #2e7d32;
+      background: #1b5e20;
       color: white;
-      padding: 20px;
       text-align: center;
+      padding: 25px 15px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 14px;
     }
 
     .container {
-      padding: 20px;
       max-width: 1000px;
       margin: auto;
+      padding: 15px;
     }
 
     .card {
       background: white;
       padding: 15px;
+      margin: 15px 0;
       border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AgroClima Inteligente</title>
-
-  <!-- Chart.js (gráficos) -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f7f5;
-      color: #333;
-    }
-
-    header {
-      background: #2e7d32;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .container {
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     h2 {
-      color: #2e7d32;
+      color: #1b5e20;
+      font-size: 18px;
     }
 
-    .weather {
+    .weather-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 10px;
     }
 
@@ -88,20 +66,27 @@
       padding: 10px;
       border-radius: 8px;
       text-align: center;
+      font-size: 14px;
     }
 
     .alert {
       background: #fff3cd;
       border-left: 6px solid #ff9800;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 6px;
+      font-size: 14px;
     }
 
     footer {
       text-align: center;
-      padding: 15px;
-      background: #2e7d32;
+      background: #1b5e20;
       color: white;
+      padding: 12px;
+      font-size: 13px;
+    }
+
+    canvas {
+      max-width: 100%;
     }
   </style>
 </head>
@@ -110,25 +95,25 @@
 
 <header>
   <h1>🌱 AgroClima Inteligente</h1>
-  <p>Tecnologia ajudando o produtor rural a decidir o melhor momento de plantar e colher</p>
+  <p>Uso da tecnologia para ajudar produtores de soja e milho a decidir o melhor momento de plantar e colher</p>
 </header>
 
 <div class="container">
 
   <div class="card">
-    <h2>📌 Problema que o site resolve</h2>
+    <h2>📌 Problema do projeto</h2>
     <p>
-      Muitos produtores de soja e milho perdem dinheiro porque plantam na época errada
-      devido à falta de informações climáticas claras. Este site ajuda a prever o clima
-      e reduzir riscos na lavoura.
+      Muitos agricultores perdem parte da produção por causa de mudanças inesperadas no clima.
+      O objetivo deste site é ajudar o produtor rural a ter informações mais claras sobre o tempo,
+      reduzindo prejuízos no plantio de soja e milho.
     </p>
   </div>
 
   <div class="card">
-    <h2>🌦️ Previsão do tempo (simulada)</h2>
-    <div class="weather">
+    <h2>🌦️ Previsão do tempo (exemplo)</h2>
+    <div class="weather-grid">
       <div class="day">Seg<br>☀️ 28°C</div>
-      <div class="day">Ter<br>⛅ 26°C</div>
+      <div class="day">Ter<br>⛅ 27°C</div>
       <div class="day">Qua<br>🌧️ 22°C</div>
       <div class="day">Qui<br>🌧️ 21°C</div>
       <div class="day">Sex<br>☀️ 30°C</div>
@@ -136,35 +121,36 @@
   </div>
 
   <div class="card">
-    <h2>⚠️ Alertas para o agricultor</h2>
+    <h2>⚠️ Alerta agrícola</h2>
     <div class="alert">
-      Chuva forte prevista na quarta e quinta-feira. Evite plantio nesses dias.
+      Alta probabilidade de chuva entre quarta e quinta-feira.
+      Evite o plantio nesse período para não prejudicar a lavoura.
     </div>
   </div>
 
   <div class="card">
     <h2>📊 Média de chuva na semana</h2>
-    <canvas id="chuvaChart"></canvas>
+    <canvas id="graficoChuva"></canvas>
   </div>
 
   <div class="card">
-    <h2>💡 Como a tecnologia ajuda</h2>
+    <h2>💡 Tecnologia aplicada</h2>
     <p>
-      O site usa programação (HTML, CSS e JavaScript) para exibir informações de forma simples.
-      No futuro, pode ser conectado a APIs de clima em tempo real.
-      A matemática ajuda a calcular médias de chuva e estimativas de produção por hectare.
+      O site usa <strong>HTML</strong>, <strong>CSS</strong> e <strong>JavaScript</strong> para funcionar.
+      No futuro, pode ser conectado a APIs de clima para trazer dados em tempo real.
+      A matemática ajuda a calcular médias de chuva e estimativas de produção por hectare,
+      facilitando a tomada de decisão do agricultor.
     </p>
   </div>
 
 </div>
 
 <footer>
-  <p>Projeto educacional - Agricultura + Tecnologia 🌾</p>
+  Projeto escolar - Tecnologia no campo 🌾
 </footer>
 
 <script>
-  // Gráfico de chuva (dados simulados)
-  const ctx = document.getElementById('chuvaChart');
+  const ctx = document.getElementById('graficoChuva');
 
   new Chart(ctx, {
     type: 'bar',
@@ -172,125 +158,17 @@
       labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
       datasets: [{
         label: 'Chuva (mm)',
-        data: [2, 5, 20, 25, 3],
-        backgroundColor: '#2e7d32'
+        data: [3, 8, 25, 22, 4],
+        backgroundColor: '#1b5e20'
       }]
     },
     options: {
-      responsive: true
-    }
-  });
-</script>
-
-</body>
-</html>
-    }
-
-    h2 {
-      color: #2e7d32;
-    }
-
-    .weather {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-    }
-
-    .day {
-      background: #e8f5e9;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .alert {
-      background: #fff3cd;
-      border-left: 6px solid #ff9800;
-      padding: 10px;
-      border-radius: 5px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #2e7d32;
-      color: white;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <h1>🌱 AgroClima Inteligente</h1>
-  <p>Tecnologia ajudando o produtor rural a decidir o melhor momento de plantar e colher</p>
-</header>
-
-<div class="container">
-
-  <div class="card">
-    <h2>📌 Problema que o site resolve</h2>
-    <p>
-      Muitos produtores de soja e milho perdem dinheiro porque plantam na época errada
-      devido à falta de informações climáticas claras. Este site ajuda a prever o clima
-      e reduzir riscos na lavoura.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>🌦️ Previsão do tempo (simulada)</h2>
-    <div class="weather">
-      <div class="day">Seg<br>☀️ 28°C</div>
-      <div class="day">Ter<br>⛅ 26°C</div>
-      <div class="day">Qua<br>🌧️ 22°C</div>
-      <div class="day">Qui<br>🌧️ 21°C</div>
-      <div class="day">Sex<br>☀️ 30°C</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>⚠️ Alertas para o agricultor</h2>
-    <div class="alert">
-      Chuva forte prevista na quarta e quinta-feira. Evite plantio nesses dias.
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>📊 Média de chuva na semana</h2>
-    <canvas id="chuvaChart"></canvas>
-  </div>
-
-  <div class="card">
-    <h2>💡 Como a tecnologia ajuda</h2>
-    <p>
-      O site usa programação (HTML, CSS e JavaScript) para exibir informações de forma simples.
-      No futuro, pode ser conectado a APIs de clima em tempo real.
-      A matemática ajuda a calcular médias de chuva e estimativas de produção por hectare.
-    </p>
-  </div>
-
-</div>
-
-<footer>
-  <p>Projeto educacional - Agricultura + Tecnologia 🌾</p>
-</footer>
-
-<script>
-  // Gráfico de chuva (dados simulados)
-  const ctx = document.getElementById('chuvaChart');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
-      datasets: [{
-        label: 'Chuva (mm)',
-        data: [2, 5, 20, 25, 3],
-        backgroundColor: '#2e7d32'
-      }]
-    },
-    options: {
-      responsive: true
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true
+        }
+      }
     }
   });
 </script>
