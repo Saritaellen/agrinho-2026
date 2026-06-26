@@ -1,5 +1,12 @@
 # 🌾 AgroClima Inteligente
+```txt
+Projeto Agrinho 2026
 
+Aluna: Sara Ellen
+Professor: Luiz Alessandro
+
+Tema: AgroClima Inteligente
+```
 ## 📌 Tema
 Projeto voltado para ajudar produtores rurais com informações climáticas e decisões de plantio.
 
